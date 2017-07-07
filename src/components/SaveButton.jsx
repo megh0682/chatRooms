@@ -19,8 +19,10 @@ class SaveButton extends React.Component {
       "php": "php",
       "erlang": "erl",
       "coffeescript": "coffee",
-      "crystal": "cr"
+      "crystal": "cr",
+      "java":"java"
     }
+    alert(fileExtensionDict[lang]);
     return fileExtensionDict[lang]
   }
 
@@ -40,7 +42,7 @@ class SaveButton extends React.Component {
 
   render() {
     return (
-      <Button className="btn-primary col-lg-12" onClick={this.saveCode.bind(this)}>save</Button>
+      <Button color='orange' size='big' onClick={this.saveCode.bind(this)}>save</Button>
     )
   }
 } 

@@ -1,14 +1,46 @@
-import express from 'express';
-import mongodb from 'mongodb';
-import open from 'open';
+// Include Server Dependencies
+var express = require("express");
+var bodyParser = require("body-parser");
+var logger = require("morgan");
+var mongoose = require("mongoose");
+import users from './routes/users'
+import auth from './routes/auth'
 import path from 'path';
 
-const app = express();
-const dbUrl = 'mongodb://localhost/codingchatrooms';
-app.set('port', process.env.PORT || 7000);
 
-mongodb.MongoClient.connect(dbUrl,function(err,db){
+// Create Instance of Express
+var app = express();
+// Sets an initial port. We'll use this later in our listener
+var PORT = process.env.PORT || 7000;
 
+// Run Morgan for Logging
+app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+app.use('/api/users', users);
+app.use('/api/auth', auth);
+
+app.use(express.static("./public"));
+
+// -------------------------------------------------
+
+// MongoDB Configuration configuration (Change this URL to your own DB)
+//mongoose.connect("mongodb://newyorktimesdb:newyorktimesdb@ds161931.mlab.com:61931/newyorktimesdb");
+mongoose.connect("mongodb://groupcoding:groupcoding@ds151222.mlab.com:51222/groupcoding");
+                  
+var db = mongoose.connection;
+
+db.on("error", function(err) {
+  console.log("Mongoose Error: ", err);
+});
+
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
+
+// -------------------------------------------------
 //context root
   app.get('/',(req,res)=>{
 
@@ -37,39 +69,110 @@ mongodb.MongoClient.connect(dbUrl,function(err,db){
   
 
   });
-  
-  const server =  app.listen(app.get('port'),function(err){
+
+// This is the route we will send GET requests to retrieve our most recent search data.
+// We will call this route the moment our page gets rendered
+app.get("/api", function(req, res) {
+
+  // We will find all the records, sort it in descending order, then limit the records to 5
+  History.find({}).sort([
+    ["date", "descending"]
+  ]).limit(5).exec(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(doc);
+    }
+  });
+});
+
+// This is the route we will send POST requests to save each search.
+app.post("/api", function(req, res) {
+  console.log("headline: " + req.body.headline);
+  console.log("weblink: " + req.body.web_url);
+  // Here we'll save the location based on the JSON input.
+  // We'll use Date.now() to always get the current date time
+  History.create({
+    headline: req.body.headline,
+    weblink:req.body.weblink,
+    date: Date.now()
+  }, function(err,doc) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log(doc._id);
+      res.send("Saved Search");
+
+    }
+  });
+});
+//Get a single record using id
+app.get("/api/:id", function(req, res) {
+
+  // We will find all the records, sort it in descending order, then limit the records to 5
+  History.findById(req.params.id, function (err, doc){
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(doc);
+    }
+  });
+    
+});
+
+// This is the route we will send delete requests to delete the article by id
+app.delete("/api/:id", function(req, res) {
+  console.log("id: " + req.params.id);
+    History.findByIdAndRemove(req.params.id, function (err,doc) {  
+    // We'll create a simple object to send back with a message and the id of the document that was removed
+    var response = {
+        message: "Article successfully deleted",
+        id: doc._id
+    };
+    res.send(response);
+    });
+});
+
+
+/************************Server Listener*******************/
+
+  const server =  app.listen(PORT,function(err){
      if(err){
        console.log(err);
      }else{
-      open(`http://localhost:${app.get('port')}`);
-      console.log(`server is running on localhost:${app.get('port')}`);
+      //openUri(`http://localhost:${app.get('port')}`);
+      console.log(`server is running on localhost:${PORT}`);
      }
   });
   
-
-  // socket.io connection
+  
+/***********************socket.io operations***********/
 
   const io = require('socket.io')(server);
 
 
     io.on('connection', (socket) => {
+
       console.log('a user connected');
     
       socket.on('disconnect', () => {
         console.log('user disconnected');
-      });
+        
+       });
 
       socket.on('room', function(data) {
-        console.log('in joining room in SERVER')
+        console.log(`joining room in ${data.room} `);
         socket.join(data.room);
-        console.log(data)
         socket.broadcast.to(data.room).emit('load users and code')
         socket.broadcast.to(data.room).emit('new user join', data.user)
       });
 
       socket.on('leave room', function(data) {
-        socket.broadcast.to(data.room).emit('user left room', {user: data.user})
+        console.log(`user left room ${data.room} `);
+        socket.broadcast.to(data.room).emit('user left room', data.user)
         socket.leave(data.room)
       })
 
@@ -88,4 +191,10 @@ mongodb.MongoClient.connect(dbUrl,function(err,db){
 
     });
 
-  });
+  
+
+
+
+
+
+

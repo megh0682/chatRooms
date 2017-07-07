@@ -1,22 +1,52 @@
+
+body{ 
+  
+  background-image: url('https://images.freecreatives.com/wp-content/uploads/2015/04/3336-grey-texture-1920x1080-abstract-wallpaper.gif');  
+ 
+
+}
+
 h1{
    font-family: Courier New, Courier, monospace;
 }
 
 .App {
  font-family: Courier New, Courier, monospace;
+
+} 
+.App-body {
+   color: rgba(255, 255, 255, 0.9); 
 } 
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+ /* animation: App-logo-spin infinite 20s linear;*/
+  animation: logo-rotate 2s both infinite;
   height: 80px;
+  
 }
 
 .App-header {
-  background-color: #250;
+  background-image:url('https://media.giphy.com/media/xTiTnxpQ3ghPiB2Hp6/giphy.gif');
+  background-size: cover;
+  color: rgba(255, 255, 255, 0.9);
+  font-family:Courier New, Courier, monospace;
+  font-size: 1.5em;
+  font-style: italic;
   height: 150px;
   padding: 10px;
-  color: white;
   text-align: center;
+}
+.headerText{
+  color:darkorange;
+  font-family:Courier New, Courier, monospace;
+  font-style: italic;
+  font-size: 1.5em;
+}
+
+.menuItem{
+ font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  font-style: italic;
+  font-size: 1.5em;
 }
 
 .App-intro {
@@ -26,4 +56,17 @@ h1{
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+
+@keyframes logo-rotate {
+  from{
+    transform: rotateY(0);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+   to {
+    transform: rotateY(0);
+  }
 }

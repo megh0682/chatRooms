@@ -7,8 +7,8 @@ export default function fetchRooms() {
   //   return res
   // })
   var payload = [
-    {id:1, title:"beginnerJSRoom",logo:roomlogo},
-    {id:2, title:"beginnerJSReactWithoutRedux",logo:roomlogo}
+  {id:1, title:"beginnerJSRoom",logo:roomlogo,description:"For beginners who want to learn build react-redux apps",owner:"Ravi"},
+  {id:2, title:"beginnerJSReactWithoutRedux",logo:roomlogo,description:"For beginners who want to learn build react-redux apps",owner:"Ravi"}
   ];
   return {type: "GET_ROOMS", payload:payload}
 }

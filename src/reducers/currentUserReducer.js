@@ -1,4 +1,7 @@
 import initialState from './initialState'
+import isEmpty from 'lodash/isEmpty';
+
+
 export default function currentUserReducer(state=initialState, action) {
   switch(action.type) { 
     case 'ASSIGN_USERNAME': 
@@ -6,7 +9,13 @@ export default function currentUserReducer(state=initialState, action) {
       state = {...state,currentUser:action.payload};
       return state
       //return action.payload;
+    case 'SET_CURRENT_USER':     
+     state = {...state, isAuthenticated: !isEmpty(action.user),
+                         user: action.user
+                        
+             };
+     return state;     
     default:
-       return  state;
+     return  state;
   }
 }

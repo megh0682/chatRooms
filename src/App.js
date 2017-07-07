@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
-import { Button, Image, List,Menu } from 'semantic-ui-react';
-import LandingPage from './components/LandingPage';
+import { BrowserRouter as Router,Link, Route, Switch,Redirect } from 'react-router-dom';
+import { Button, Image, List,Menu,Container } from 'semantic-ui-react';
+import Page404 from './components/Page404';
 import HomePage from './components/HomePage';
-import ChatRoomList from './components/ChatRoomList';
 import ChatRoomDetails from './components/ChatRoomDetails';
 import FixedHeader from './components/FixedHeader';
 import FixedMenu from './components/FixedMenu';
+import FlashMessagesList from './components/flash/FlashMessagesList';
 import logo from './chat.png';
 import './App.css';
+import Routes from './Routes';
 
 class App extends Component {
   render() {
@@ -20,11 +21,11 @@ class App extends Component {
     <div className="App-Intro">
         <FixedMenu/>  
     </div>
-
-  <Route exact path="/" component={LandingPage} />
-  <Route exact path="/rooms" component={HomePage} />
-  <Route path="/rooms/:id" component={ChatRoomDetails} />        
-
+   
+  <div className="App-body">
+     <FlashMessagesList />
+    <Routes/>
+ </div>
   </div>
     );
   }

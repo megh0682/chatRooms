@@ -11,18 +11,22 @@ export default class FixedMenu extends Component {
     const { activeItem } = this.state
 
     return (
-      <Menu>
+      <Menu widths="four" inverted>
         <Menu.Item
           as={Link} to='/rooms'
           name='Home'
+          className='menuItem'
+           color='orange'
           active={activeItem === 'Home'}
           onClick={this.handleItemClick}
         >
-          Home
+         All Rooms
         </Menu.Item>
 
         <Menu.Item
           name='Add Room'
+          color='orange'
+          className='menuItem'
           active={activeItem === 'Add Room'}
           onClick={this.handleItemClick}
         >
@@ -30,11 +34,25 @@ export default class FixedMenu extends Component {
         </Menu.Item>
 
         <Menu.Item
-          name='Active Rooms'
-          active={activeItem === 'Active Rooms'}
+          name='New User Signup'
+          as={Link} to='/signup'
+          color='orange'
+          className='menuItem'
+          active={activeItem === 'New User Signup'}
           onClick={this.handleItemClick}
         >
-         Active Rooms
+          New User Signup
+        </Menu.Item>
+
+        <Menu.Item
+          name='Login'
+          as={Link} to='/login'
+        className='menuItem'
+          active={activeItem === 'Login'}
+           color='orange'
+          onClick={this.handleItemClick}
+        >
+         Login
         </Menu.Item>
       </Menu>
     )

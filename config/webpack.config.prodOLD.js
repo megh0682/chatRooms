@@ -276,7 +276,6 @@ module.exports = {
       },
       output: {
         comments: false,
-        
       },
       sourceMap: true,
     }),

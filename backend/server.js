@@ -22,7 +22,11 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
-app.use(express.static("./public"));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}else{
+  app.use(express.static("./public"));
+}
 
 // -------------------------------------------------
 

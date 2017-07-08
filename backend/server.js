@@ -11,7 +11,7 @@ import path from 'path';
 // Create Instance of Express
 var app = express();
 // Sets an initial port. We'll use this later in our listener
-var PORT = process.env.PORT || 7000;
+var PORT = process.env.PORT || 9000;
 
 // Run Morgan for Logging
 app.use(logger("dev"));
@@ -95,11 +95,11 @@ app.delete("/api/:id", function(req, res) {
      if(err){
        console.log(err);
      }else{
-       console.log(`server is running on localhost:${PORT}`);
+       console.log("App listening on PORT " + PORT);
      }
   });
-  
-  
+
+    
 /***********************socket.io operations***********/
 
   const io = require('socket.io')(server);

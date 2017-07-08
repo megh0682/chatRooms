@@ -1,1 +1,1 @@
-web: babel-node backend/server.js
+web: babel-node -- backend/server.js

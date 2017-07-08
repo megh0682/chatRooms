@@ -23,7 +23,7 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('../build'));
 }else{
   app.use(express.static("./public"));
 }
@@ -95,8 +95,7 @@ app.delete("/api/:id", function(req, res) {
      if(err){
        console.log(err);
      }else{
-      //openUri(`http://localhost:${app.get('port')}`);
-      console.log(`server is running on localhost:${PORT}`);
+       console.log(`server is running on localhost:${PORT}`);
      }
   });
   

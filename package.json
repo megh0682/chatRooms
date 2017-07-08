@@ -59,6 +59,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.28.0",
     "jest": "20.0.3",
+    "npm-run-all": "^4.0.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.5",
@@ -74,9 +75,9 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "npm run client & npm run server",
     "client": "node scripts/start.js",
-    "server": "cd backend && npm start",
+    "server": "babel-node -- backend/server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
@@ -116,5 +117,4 @@
   "eslintConfig": {
     "extends": "react-app"
   }
-
 }

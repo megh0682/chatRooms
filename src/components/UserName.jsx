@@ -5,7 +5,11 @@ import ChatRoomList from './ChatRoomList';
 import PropTypes from 'prop-types';
 import * as fetchRooms from '../actions/fetchRooms';
 import {Button,Label,Input,Form} from 'semantic-ui-react';
+import '../App.css';
 
+const textFont={
+   fontSize: '1.5em'
+}
 class UserName extends React.Component {
 
  constructor(props){
@@ -15,8 +19,8 @@ class UserName extends React.Component {
 
   triggerChooseUserName(e) {
     e.preventDefault()
-    this.props.chooseUserName(this.state.userName)
-    this.setState({editing: false})
+    this.props.chooseUserName(this.state.userName);
+    this.setState({editing: false});
   }
 
   updateState(e) {
@@ -30,14 +34,14 @@ class UserName extends React.Component {
 
   editForm() {
     return (
-
-      <Form inverted>
-        <Form.Group widths='12' inline>
-          <Form.Input label='USERNAME: ' placeholder='enter your preferred username' inverted defaultValue={this.props.userName} onChange={this.updateState.bind(this)} />
-          <Form.Button type="submit" onClick={this.triggerChooseUserName.bind(this)}>Submit</Form.Button>
+      
+      <Form inverted success='true' warning='true'>
+        <Form.Group widths='12' inline >
+          <Form.Input placeholder='enter your preferred username' defaultValue={this.props.userName} onChange={this.updateState.bind(this)} style = {textFont} />
+          <Button type="submit" onClick={this.triggerChooseUserName.bind(this)} size='huge' color='teal' inverted='true'>Submit</Button>
         </Form.Group>
-       
       </Form>
+   
 
 
     )
@@ -45,14 +49,14 @@ class UserName extends React.Component {
 
   editButton() {
     return (
-
-      <Form inverted>
+    
+      <Form inverted success='true' warning='true'>
         <Form.Group widths='12' inline>
-          <Form.Input label='USERNAME: ' placeholder='enter your preferred username' inverted defaultValue={this.props.userName} onChange={this.updateState.bind(this)} />
-          <Form.Button type="submit" onClick={this.toggleEditing.bind(this)}>Submit</Form.Button>
+          <Form.Input placeholder='enter your preferred username' disabled = 'true' inverted defaultValue={this.props.userName} onChange={this.updateState.bind(this)} style = {textFont} />
+           <Button type="submit"  type="submit" onClick={this.toggleEditing.bind(this)} size='huge' color='teal' inverted='true'>Click To Edit</Button>
         </Form.Group>
-        
       </Form>
+   
 
 
  /*<form class="ui form">

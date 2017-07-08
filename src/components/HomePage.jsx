@@ -4,30 +4,36 @@ import {bindActionCreators} from 'redux';
 import ChatRoomList from './ChatRoomList';
 import UserName from './UserName';
 import PropTypes from 'prop-types';
-import * as fetchRooms from '../actions/fetchRooms';
-import * as assignUserName from '../actions/assignUserName';
+import fetchRooms from '../actions/fetchRooms';
+import assignUserName from '../actions/assignUserName';
 
 class HomePage extends React.Component {
 
-  componentDidMount(){
+  
+  constructor(props) {
+    super(props);
+    this.chooseUserName = this.chooseUserName.bind(this);
+  }
+
+ componentDidMount(){
 
         //alert(this.props.userName);
         //alert(this.props.rooms.length);
         if(this.props.rooms.length == 0){
           console.log("I am going to fetchRooms");
-          this.props.actions.fetchRooms()
+          this.props.fetchRooms()
         }
      
   }
   chooseUserName(userName) {
-    this.props.actions.assignUserName(userName);
+    this.props.assignUserName(userName);
   }
 
   render() {
     return (
     <div>
-      <h1>Welcome! Join any room as {this.props.userName} or enter your avatar name </h1>
-      <UserName userName={this.props.userName} chooseUserName={this.chooseUserName.bind(this)}/>
+      <h2>Welcome {this.props.loggedin.name}! Join any room as {this.props.userName} or enter your avatar name </h2>
+      <UserName userName={this.props.userName} chooseUserName={this.chooseUserName}/>
       <br/>
       <ChatRoomList rooms = {this.props.rooms}/>
     </div>
@@ -48,13 +54,8 @@ function mapStateToProps(state){
   // + typeof(state.availableRooms));
 
   return{ rooms:state.rooms.availableRooms,
-          userName: state.currentUser }
-
-}
-
-function mapDispatchToProps(dispatch) {
-
-  return {actions: bindActionCreators(Object.assign(fetchRooms,assignUserName), dispatch)}
+          userName: state.rooms.currentUser,
+          loggedin:state.rooms.user }
 
 }
 
@@ -62,8 +63,9 @@ HomePage.propTypes = {
   rooms: PropTypes.array.isRequired,
   fetchRooms:PropTypes.func.isRequired,
   assignUserName:PropTypes.func.isRequired,
-  userName:PropTypes.string.isRequired
+  userName:PropTypes.string.isRequired,
+  loggedin:PropTypes.object.isRequired
 
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps,{assignUserName,fetchRooms})(HomePage);

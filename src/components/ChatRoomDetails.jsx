@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Grid,Icon,Divider,Header} from 'semantic-ui-react';
+import {Button,Grid,Icon,Divider,Header,Label} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Codemirror from 'react-codemirror';
 import {connect} from 'react-redux';
@@ -17,6 +17,10 @@ import 'brace/theme/twilight';
 
 const io = require('socket.io-client');
 const socket = io();
+
+const textFont={
+   fontSize: '1.2em'
+ }
 
 class ChatRoomDetails extends React.Component {
 
@@ -43,7 +47,7 @@ class ChatRoomDetails extends React.Component {
 
     componentDidMount(){
 
-    alert(this.props);
+    //alert(this.props);
 
     if (this.props.availableRoom.id == undefined) {
       this.props.actions.fetchRooms();
@@ -65,12 +69,12 @@ class ChatRoomDetails extends React.Component {
    }
   
   componentWillUnmount(){
-     alert("componentWillUnmount CALLED");
+     //alert("componentWillUnmount CALLED");
      this.leaveRoomEvent();
   }
 
   leaveRoomEvent(){
-    alert("leaveRoomEvent CALLED");
+    //alert("leaveRoomEvent CALLED");
     socket.emit('leave room',{room: this.props.availableRoom.id,user:this.props.currentUser});
 
   }
@@ -82,7 +86,7 @@ class ChatRoomDetails extends React.Component {
   removeUser(user) {
     const newUsers = Object.assign([], this.state.users);
     const indexOfUserToDelete = this.state.users.findIndex(Olduser => {return Olduser == user})
-    alert("delete user at index "+indexOfUserToDelete);
+    //alert("delete user at index "+indexOfUserToDelete);
     newUsers.splice(indexOfUserToDelete, 1);
     this.setState({users: newUsers})
   }
@@ -140,14 +144,15 @@ class ChatRoomDetails extends React.Component {
   <Grid.Row>
     <Grid.Column width={12}>
         <br/>
-        <Header as='h3' color='violet'>Welcome to {this.props.availableRoom.title} room! <small><i> {this.props.availableRoom.description}</i> </small></Header>
+        <Label size='huge' color='teal'>Room: </Label><p style={textFont}> {this.props.availableRoom.title} </p>
+        <Label size='huge' color='teal'>Purpose: </Label><p style={textFont}>{this.props.availableRoom.description}</p>
     </Grid.Column>
   </Grid.Row>
   <Grid.Row>
       <Grid.Column width={12}>
         <AceEditor mode="javascript" 
-                width="1000px"
-                fontSize="14"
+                width="950px"
+                fontSize="1.5em" 
                 theme="twilight" 
                 value={this.state.code} 
                 onChange={this.codeIsHappening.bind(this)} 
@@ -156,7 +161,7 @@ class ChatRoomDetails extends React.Component {
       </Grid.Column>
       <Grid.Column width={4} className='ui center aligned'>
          <Icon name='users' size='huge' color ='orange'/>
-         <Divider />
+         
          <UserList users={this.state.users} 
                currentlyTyping={this.state.currentlyTyping}  
                className="ui right floated" /> 
@@ -165,8 +170,8 @@ class ChatRoomDetails extends React.Component {
     <Grid.Row>
       <Grid.Column width={12} className="ui center aligned">
         <SaveButton text={this.state.code} lang="javascript" title={this.props.availableRoom.title} />
-        <Button color='orange' size='big' onClick={this.clearCode.bind(this)} >clear code</Button>
-        <Button color='orange' size='big' ><Link to={`/rooms`}>Leave Room</Link></Button>
+        <Button inverted='true' color='teal' size='big' onClick={this.clearCode.bind(this)} >clear code</Button>
+        <Button inverted='true' color='teal' size='big' ><Link to={`/rooms`}>exit room</Link></Button>
         {/*<LeaveRoomButton roomtitle={this.props.availableRoom.title} 
                          roomID={this.props.availableRoom.id}
                          user = {this.props.currentUser}
@@ -188,12 +193,13 @@ function mapStateToProps(state, props) {
   // alert(`props.${prop}: ${props[prop]}`);
   var obj= props['match']['params'];
   for(var o in obj){
-      alert(`obj.${o}: ${obj[o]}`);
+      //alert(`obj.${o}: ${obj[o]}`);
     }   
   if (state.rooms.availableRooms.length > 0) {
-    const availableRoom = state.rooms.availableRooms.filter(availableRoom => {return availableRoom.id == props.match.params.id})[0]
-    const userName = sessionStorage.currentUser || state.currentUser
-    alert(availableRoom.id);
+    const availableRoom = state.rooms.availableRooms.filter(availableRoom => {return availableRoom.id == props.match.params.id})[0];
+    const userName = sessionStorage.currentUser || state.rooms.currentUser;
+    //alert("ROOMID:"+availableRoom.id);
+    //alert("currentUser"+userName);
     return {availableRoom: availableRoom, currentUser: userName}
   } else {
     return {availableRoom: {title: '', description: '', source: ''}, currentUser: ''}

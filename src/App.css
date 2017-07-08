@@ -1,10 +1,8 @@
+body {
+   background-image: url('https://images.freecreatives.com/wp-content/uploads/2015/04/3336-grey-texture-1920x1080-abstract-wallpaper.gif'); 
+   overflow: scroll;
+} 
 
-body{ 
-  
-  background-image: url('https://images.freecreatives.com/wp-content/uploads/2015/04/3336-grey-texture-1920x1080-abstract-wallpaper.gif');  
- 
-
-}
 
 h1{
    font-family: Courier New, Courier, monospace;
@@ -15,7 +13,11 @@ h1{
 
 } 
 .App-body {
-   color: rgba(255, 255, 255, 0.9); 
+   color: rgba(255, 255, 255, 0.9);
+   margin-left: 10px;
+   margin-right:20px; 
+   padding-right:20px;
+   padding-left:40px;
 } 
 
 .App-logo {
@@ -41,6 +43,7 @@ h1{
   font-family:Courier New, Courier, monospace;
   font-style: italic;
   font-size: 1.5em;
+  background-color:black;
 }
 
 .menuItem{
@@ -48,7 +51,9 @@ h1{
   font-style: italic;
   font-size: 1.5em;
 }
-
+.bigFont{
+  font-size: 24px;
+}
 .App-intro {
   font-size: large;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
-import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input,Label } from 'semantic-ui-react';
 
 
 class SignupForm extends React.Component {
@@ -60,16 +60,16 @@ onSubmit(e) {
 
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
-      alert(this.state.name);
-      alert(this.state.username);
-      alert(this.state.password);
+      //alert(this.state.name);
+      //alert(this.state.username);
+      //alert(this.state.password);
       this.props.userSignupRequest(this.state).then(
         () => {
           this.props.addFlashMessage({
             type: 'success',
-            text: 'You have signed up successfully.  Welcome!'
+            text: 'You have signed up successfully.Login here to join the coding rooms!'
           })
-           this.context.router.history.push('/');
+           this.context.router.history.push('/login');
         },
         (err) => this.setState({ errors: err.response.data, isLoading: false })
       );
@@ -95,7 +95,7 @@ validateInput(data) {
     errors.password = 'This field should be 6 or more character in length';
   }
 
- alert(isEmpty(errors));
+ //alert(isEmpty(errors));
  
   return {
     errors,
@@ -108,22 +108,22 @@ validateInput(data) {
    const { errors,name,username,password } = this.state;
       
     return (
-   <Form>
+   <Form  inverted='true' size='big'>
     <Form.Field type='text'required='true'  error={errors.name}>
-      <label>Name</label>
-      <Input placeholder='Name' name='name' type='text'onChange={this.onChange} value={name}/>
+      <Label horizontal ='true' inverted='true' size='massive'color='teal'>Name</Label>
+      <Input inverted='true' size='big' placeholder='name' name='name' type='text'onChange={this.onChange} value={name}/>
     </Form.Field>
     <Form.Field type='email'required='true'  error={errors.username}>
-      <label>Email</label>
-      <Input placeholder='email' type='email' onChange={this.onChange} value={username}
+      <Label horizontal ='true' inverted='true' size='massive'color='teal'>Email</Label>
+      <Input inverted='true' size='big'  placeholder='email' type='email' onChange={this.onChange} value={username}
         name='username' />
     </Form.Field>
     <Form.Field type='password'required='true' error={errors.password}>
-      <label>Password</label>
-     <Input placeholder='password' type='password' onChange={this.onChange} value={password} name='password'/>
+      <Label horizontal ='true' inverted='true' size='massive'color='teal'>Password</Label>
+     <Input inverted='true' size='big'  placeholder='password' type='password' onChange={this.onChange} value={password} name='password'/>
     </Form.Field>
     <Form.Field>
-    <Button type='submit' onClick={this.onSubmit}>Submit</Button>
+    <Button inverted='true' size='big' color='teal' type='submit' onClick={this.onSubmit}>Submit</Button>
      </Form.Field>
      </Form>
     )

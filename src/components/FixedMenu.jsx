@@ -1,17 +1,42 @@
-import React, { Component } from 'react'
+import React, { Component,PropTypes } from 'react'
 import {Link} from 'react-router-dom';
-import { Menu } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
-export default class FixedMenu extends Component {
-  state = {}
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+class FixedMenu extends Component {
+   constructor(props) {
+    super(props);
+    this.state={ activeItem:''};
+    this.handleItemClick  = this.handleItemClick.bind(this);
+   }
+  
+ componentWillMount(){
+    
+    //alert("IAMCALLED");
+    //alert(isEmpty(this.props.loggedin));
+    if (!isEmpty(this.props.loggedin)){
+         this.state={ activeItem:'Home'};
+         this.context.router.history.push('/rooms');  
 
-  render() {
-    const { activeItem } = this.state
+    }else{
+         this.state={ activeItem:'Login'};
+         this.context.router.history.push('/login');  
+    }
 
-    return (
-      <Menu widths="four" inverted>
+}
+
+handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  
+render(){
+  const  activeItem = this.state.activeItem;  
+  //alert(activeItem);
+
+  if (!isEmpty(this.props.loggedin)){
+  //alert("INSIDE LOGGED IN DISPLAY");
+   return (
+  <Menu size="big" inverted='true' widths="two">
         <Menu.Item
           as={Link} to='/rooms'
           name='Home'
@@ -32,7 +57,25 @@ export default class FixedMenu extends Component {
         >
           Add Room
         </Menu.Item>
-
+  </Menu>
+     
+    )
+    }else{
+         //alert("INSIDE NOT LOGGED IN DISPLAY");
+    return(
+       
+       <Menu widths="two" size="big" inverted='true'>
+        <Menu.Item
+              name='Login'
+              as={Link} to='/login'
+            className='menuItem'
+              active={activeItem === 'Login'}
+              color='orange'
+              onClick={this.handleItemClick}
+            >
+            Login
+            </Menu.Item>
+     
         <Menu.Item
           name='New User Signup'
           as={Link} to='/signup'
@@ -42,19 +85,27 @@ export default class FixedMenu extends Component {
           onClick={this.handleItemClick}
         >
           New User Signup
-        </Menu.Item>
+       </Menu.Item>
+   </Menu>
+       
+      )
 
-        <Menu.Item
-          name='Login'
-          as={Link} to='/login'
-        className='menuItem'
-          active={activeItem === 'Login'}
-           color='orange'
-          onClick={this.handleItemClick}
-        >
-         Login
-        </Menu.Item>
-      </Menu>
-    )
+
+    }
+       
   }
 }
+
+FixedMenu.propTypes = {  
+ loggedin: PropTypes.object.isRequired
+}
+
+FixedMenu.contextTypes = {
+  router:PropTypes.object.isRequired
+}
+
+function mapStateToProps(state, ownProps) {  
+  return {loggedin: state.rooms.user};
+}
+
+export default connect(mapStateToProps)(FixedMenu);

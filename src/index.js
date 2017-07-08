@@ -11,6 +11,9 @@ import {BrowserRouter} from 'react-router-dom';
 //eslint-disable-next-line
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import setAuthorizationToken from './utils/setAuthorizationToken';
+import { setCurrentUser } from './actions/authActions';
+import jwtDecode from 'jwt-decode';
 
 const store = createStore(
   rootReducer,
@@ -19,6 +22,11 @@ const store = createStore(
   applyMiddleware(thunk)
  )
 );
+
+if (sessionStorage.jwtToken) {
+  setAuthorizationToken(sessionStorage.jwtToken);
+  store.dispatch(setCurrentUser(jwtDecode(sessionStorage.jwtToken)));
+}
 
 ReactDOM.render(
 <BrowserRouter>

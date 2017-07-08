@@ -14,6 +14,7 @@ import Routes from './Routes';
 class App extends Component {
   render() {
     return (
+  
   <div className="App">
     <div className="App-header">
         <FixedHeader/>
@@ -21,12 +22,16 @@ class App extends Component {
     <div className="App-Intro">
         <FixedMenu/>  
     </div>
-   
+  
   <div className="App-body">
+     
      <FlashMessagesList />
-    <Routes/>
+     <Routes/>
+     
  </div>
+
   </div>
+  
     );
   }
 }

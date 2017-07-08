@@ -17,8 +17,8 @@ export default function ChatRoomList(props){
    
    return (
    <div>
-    <List divided verticalAlign='middle'>
-     <p> List of rooms </p>
+    <List divided verticalAlign='middle' size='big'>
+    
      {props.rooms.map((room, i) => {
         return <ChatRoom key={i} roomID= {room.id}  roomTitle={room.title} logo ={room.logo}/>
       })}

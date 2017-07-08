@@ -22,7 +22,7 @@ class SaveButton extends React.Component {
       "crystal": "cr",
       "java":"java"
     }
-    alert(fileExtensionDict[lang]);
+    //alert(fileExtensionDict[lang]);
     return fileExtensionDict[lang]
   }
 
@@ -42,7 +42,7 @@ class SaveButton extends React.Component {
 
   render() {
     return (
-      <Button color='orange' size='big' onClick={this.saveCode.bind(this)}>save</Button>
+      <Button inverted='true' color='teal' size='big' onClick={this.saveCode.bind(this)}>save</Button>
     )
   }
 } 

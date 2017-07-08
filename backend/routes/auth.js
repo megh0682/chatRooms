@@ -6,7 +6,6 @@ import config from '../config';
 import isEmpty from 'lodash/isEmpty';
 
 let router = express.Router();
-
 router.post('/', (req, res) => {
   const { username, password } = req.body;
   //const password_digest = bcrypt.hashSync(password, 10);
@@ -28,7 +27,8 @@ router.post('/', (req, res) => {
                   console.log(user[0]['_id']);
                  const token = jwt.sign({
                   id: user[0]['_id'],
-                  username: user[0]['email']
+                  username: user[0]['email'],
+                  name:user[0]['name']
             }, config.jwtSecret);
              console.log("TOKEN:"+token);
              res.json({ token });
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
              }
           }
         }else {
-       res.status(401).json({ errors: { form: 'Invalid Credentials' } });
+       res.status(401).json({ errors: { form: 'Invalid Credentials...' } });
         }
    });
 });

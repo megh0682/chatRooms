@@ -34,14 +34,14 @@ class LoginForm extends React.Component {
     e.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
-      alert(this.state);
+   
       this.props.login(this.state).then(
         (res) => {
           this.props.addFlashMessage({
             type: 'success',
             text: 'You have logged in successfully!'
           });
-          this.context.router.history.push('/');  
+          this.context.router.history.push('/rooms');  
           },
         (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
       );
@@ -75,19 +75,19 @@ validateInput(data) {
     const { errors, username, password, isLoading } = this.state;
 
     return (
-    <Form >
+    <Form inverted='true' size='big'>
         {/*{ errors.form && <div className="alert alert-danger">{errors.form}</div> }*/}
     <Form.Field type='email'required='true'  error={errors.username}>
-      <label>Email</label>
-      <Input placeholder='email' type='email' onChange={this.onChange} value={username}
+      <Label horizontal ='true' inverted='true' size='massive'color='teal'>Email</Label>
+      <Input inverted='true' size='big' placeholder='email' type='email' onChange={this.onChange} value={username}
         name='username' />
     </Form.Field>
     <Form.Field type='password'required='true' error={errors.password}>
-      <label>Password</label>
-     <Input placeholder='password' type='password' onChange={this.onChange} value={password} name='password'/>
+      <Label color='teal' horizontal ='true' inverted='true' size='massive'>Password</Label>
+     <Input inverted='true' size='big' placeholder='password' type='password' onChange={this.onChange} value={password} name='password'/>
     </Form.Field>
     <Form.Field>
-    <Button type='submit' onClick={this.onSubmit}>Submit</Button>
+    <Button inverted='true' size='big' color='teal' type='submit' onClick={this.onSubmit}>Submit</Button>
     </Form.Field>
   </Form>
 

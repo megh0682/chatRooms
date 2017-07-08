@@ -1,6 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
 
+var divStyle = {
+  "font-size":"14px",
+   "font-style":"bold"
+};
 class FlashMessage extends React.Component {
   constructor(props){
     super(props);
@@ -14,7 +18,7 @@ class FlashMessage extends React.Component {
   render() {
     const { id, type, text } = this.props.message;
     return (
-      <div className={classnames('alert', {
+      <div style={divStyle} className={classnames('alert', {
         'alert-success': type === 'success',
         'alert-danger': type === 'error'
       })}>

@@ -14,6 +14,8 @@ export default function currentUserReducer(state=initialState, action) {
                          user: action.user
                         
              };
+     //alert(state.user.username);
+     //alert(state.isAuthenticated);
      return state;     
     default:
      return  state;

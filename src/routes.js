@@ -15,10 +15,10 @@ const Routes = () =>  (
     <Switch>
       <Route exact path="/" exact component={HomePage}/>
       <Route exact path="/rooms" component={HomePage}/>
+      <Route  path="/rooms/:id" component={ChatRoomDetails} />
       <Route exact path= "/signup" component={SignupPage} />
-      <Route  exact path="/login" component={LoginPage} />
+      <Route path="/login" component={LoginPage} />
       <Redirect from="/futurerooms" to="/rooms"/>
-      <Route exact path="/rooms/:id" component={ChatRoomDetails} />
       <Route component={Page404}/>
     </Switch>
   </div>  

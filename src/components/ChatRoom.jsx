@@ -10,9 +10,9 @@ class ChatRoom extends React.Component {
         return(
     <List.Item>
       <List.Content floated='right'>
-      <Button> <Link to={`/rooms/${this.props.roomID}`}>Join</Link></Button>
+      <Button size='massive' color='teal' inverted='true'> <Link to={`/rooms/${this.props.roomID}`}>Join</Link></Button>
       </List.Content>
-      <Image avatar src={this.props.logo} />
+      <Image avatar src={this.props.logo} size='tiny'/>
       <List.Content>
         {this.props.roomTitle}
       </List.Content>

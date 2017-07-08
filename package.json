@@ -115,6 +115,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "homepage": "https://js-coding-rooms.herokuapp.com/"
+  }
+
 }
